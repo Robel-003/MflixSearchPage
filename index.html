@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA_Compatible" content="ie=edge">
+    <title>Mflix Search Page</title>   
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Mflix</h1>
+    </header>
+    <main>
+        <form>
+            <input id="title" placeholder="Movie Title" type="text">
+            
+            <!--
+            <h2>Director</h2>
+            <input id="directors" placeholder="Director's name" type="text"><br>
+            <h2>Genre</h2>
+            <input id="genres" placeholder="Genre category" type="text"><br>
+            <h2>Actor</h2>
+            <input id="cast" placeholder="Actor Name" type="text"><br>
+            <h2>Movie Year</h2>
+            <input id="year" placeholder="Movie Year" type="number"><br>
+            -->
+        </form>
+        <button id="Button" onclick="fetchListings()">Get Movie</button>
+        <div id="movies">
+            <ul id="movieListing"></ul>
+        </div>
+    </main>
+
+    <script>        
+
+        // make an array for different property types 
+            // -> property_types: [Apartment, Loft, Guesthouse, House, Condominium]
+
+        async function fetchListings() {
+
+            // title, rated, directors, genres, plot, released, tomatoes, cast 
+
+            const title = document.getElementById("title").value;
+            // const director = document.getElementById("directors").value;
+            // const genre = document.getElementById("genres").value;
+            // const cast = document.getElementById("cast").value;
+            // const year = document.getElementById("year").value;
+            // const movieYear = parseInt(year);
+
+            const query = `title=${title}`;
+            const api_endpoint = `http://localhost:3000/findOne/?${query}`;
+            const response = await fetch(api_endpoint );
+            const data = await response.json();
+            console.log(data);
+            // console.log(data.rated);
+            // console.log(data.plot);
+            // console.log(data.directors);
+            // console.log(data.cast);
+            // console.log(data.genres);
+            // console.log(data.year);
+
+            const movieResult = document.getElementById("movieListing");
+            movieResult.innerHTML = "";
+            const list = document.createElement("p");
+            list.innerHTML = 
+            `<p>Movie Title: ${data.title} </p>
+            <p>Director(s): ${data.directors}</p>
+            <p>Genre(s): ${data.genres}</p>
+            <p>Cast: ${data.cast}</p>
+            <p>Plot: ${data.plot}</p>`;
+            movieResult.appendChild(list);
+        
+        }
+
+    </script>
+</body>
+</html>
